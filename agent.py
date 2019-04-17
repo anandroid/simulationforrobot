@@ -1,6 +1,7 @@
 class Agent:
 
-	def __init__(self, width=None, height=None):
-		self.width = 0
-		self.height = 0
-		self.possible_actions = ["moveLeft", "moveRight", "moveForward", "moveBackward"]
+	def __init__(self, x, y):
+		self.x = x
+		self.y = y
+		self.coord=(self.x,self.y)
+		self.abstract_actions = ["moveLeft", "moveRight", "moveForward", "moveBackward"]

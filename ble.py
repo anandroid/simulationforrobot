@@ -20,13 +20,17 @@ class BLE:
 		return distance
 
 	def distance_to_rssi(self, distance):
-		rssi = self.measured_power - (math.log(distance,10) * 10*self.N)
+		rssi = self.measured_power
+		if distance > 0:
+			rssi = self.measured_power - (math.log(distance, 10) * 10 * self.N)
+		else:
+			rssi = rssi / 5
 		return rssi
 
 	def coord_to_rssi(self, coord):
 		distance = self._euclidean_distance(self.coord, coord)
 		rssi = self.distance_to_rssi(distance)
-		rssi += np.random.normal(0, self.noise_std_dev)
+		rssi -= np.random.normal(0, self.noise_std_dev)
 		return rssi
 
 def localise(ble1, dist1, ble2, dist2, ble3, dist3):
@@ -50,7 +54,9 @@ def runner():
 
 	ble1 = BLE(4, -73, (0,0))
 	ble2 = BLE(4, -73, (0,100))
-	ble3 = BLE(4, -73, (100,100))
+	ble3 = BLE(4, -73, (50,50))
+	ble4 = BLE(4, -73, (50, 30))
+	ble5 = BLE(4, -73, (40, 50))
 
 	test_point = (40, 50)
 
@@ -66,10 +72,15 @@ def runner():
 	point = localise(ble1, dist1, ble2, dist2, ble3, dist3)
 	print(point)
 
-	for i in range(0,100):
-		print(ble1.coord_to_rssi(test_point))
+	#for i in range(0,100):
+	print(ble1.coord_to_rssi(test_point))
+	print(ble2.coord_to_rssi(test_point))
+	print(ble3.coord_to_rssi(test_point))
+	print(ble4.coord_to_rssi(test_point))
+	print(ble5.coord_to_rssi(test_point))
 
 
-runner()
+
+#runner()
 
 

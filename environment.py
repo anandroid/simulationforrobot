@@ -13,6 +13,35 @@ class Environment:
 	def add_obstacle(self, obj_bottom_left, obj_top_right):
 		self.obstacles.append((obj_bottom_left, obj_top_right))
 
+
+	def _state_in_obstacle(self, state, obstacle):
+
+		obstacle_min_coord = obstacle[0]
+		obstacle_max_coord = obstacle[1]
+
+		if state[0] <= obstacle_max_coord[0] and state[1] <= obstacle_max_coord[1] and state[0] >= obstacle_min_coord[0] and state[1] >= obstacle_min_coord[1]:
+			return True
+		else:
+			return False
+
+	def is_valid_waypoint(self,coor):
+		if coor[0] >= self.grid_min_coord[0] and coor[0] <= self.grid_max_coord[0] and coor[1] >= self.grid_min_coord[1] and coor[1] <= self.grid_max_coord[1]:
+
+			for obstacle in self.obstacles:
+				if self._state_in_obstacle(coor, obstacle):
+					return False
+
+			return True
+		else:
+			return False
+
+	def is_goal_state(self, coor):
+		if coor[0] == self.goal_coord[0] and coor[1] == self.goal_coord[1]:
+			return True
+		else:
+			return False
+
+
 	def visualise(self):
 
 		mat = np.zeros(( (self.grid_max_coord[1])+1, (self.grid_max_coord[0])+1 ))
@@ -30,6 +59,7 @@ class Environment:
 		plt.matshow(mat)
 		plt.show()
 
+
 def runner():
 
 	grid_min_coord_x = int(input("enter bottom left x coordinate of grid: "))
@@ -45,7 +75,7 @@ def runner():
 
 	Env = Environment((grid_min_coord_x, grid_min_coord_y), (grid_max_coord_x,grid_max_coord_y), (agent_coord_x,agent_coord_y), (goal_coord_x,goal_coord_y))
 
-	flag = input("do you want to enter any obstacles (Y/N)? ")
+	flag = raw_input("do you want to enter any obstacles (Y/N)? ")
 	
 	while flag == "Y":
 		
@@ -56,9 +86,9 @@ def runner():
 		
 		Env.add_obstacle((bottom_left_coord_x,bottom_left_coord_y), (top_right_coord_x,top_right_coord_y))
 
-		flag = input("do you want to enter more obstacles (Y/N)? ")
+		flag = raw_input("do you want to enter more obstacles (Y/N)? ")
 
 	Env.visualise()
 
-# runner()
+#runner()
 

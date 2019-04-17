@@ -54,7 +54,7 @@ class WaypointPlanner:
 		init_state = self.env.agent_coord
 		goal_state = self.env.goal_coord
 
-		possible_actions = self.agent.possible_actions
+		possible_actions = self.agent.abstract_actions
 		state_list = []
 
 		priority_queue = [(0, init_state)]
@@ -66,6 +66,7 @@ class WaypointPlanner:
 		trace = {}
 		trace[self._state_to_key(init_state)] = None
 
+        #To-Do we need to get the init state based on the initial triangulation calculation
 		current_state = init_state
 		prev_state = None
 
@@ -140,4 +141,4 @@ def runner():
 
 	wp.visualise(plan)
 
-runner()
+#runner()
