@@ -118,7 +118,6 @@ class PomdpWaypointPlanner:
         mat = np.zeros(((self.env.grid_max_coord[1]) + 1, (self.env.grid_max_coord[0]) + 1))
 
         for obstacle in self.env.obstacles:
-            print(obstacle)
             x_list = [x for x in range(obstacle[0][0], obstacle[1][0] + 1)]
             y_list = [y for y in range(obstacle[0][1], obstacle[1][1] + 1)]
             for x in x_list:

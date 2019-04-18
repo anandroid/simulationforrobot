@@ -10,4 +10,4 @@ Install the following libraries for python:
 **To run the simulator**
 ----
 Execute: 
->python3 main_auto.py
+>python3 main.py
